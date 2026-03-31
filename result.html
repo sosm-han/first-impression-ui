@@ -1,152 +1,377 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>선택 결과</title>
+
 <style>
-  * { box-sizing: border-box; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", sans-serif;
-    margin: 0;
-    padding: 24px 16px 40px;
-    background: linear-gradient(180deg, #fff7fb 0%, #fafafa 100%);
-    color: #222;
+:root {
+  --bg: #fff8fa;
+  --card: #ffffff;
+  --text: #222222;
+  --muted: #888888;
+  --primary: #ff6b9a;
+  --primary-soft: #ffe3ec;
+  --line-soft: rgba(0,0,0,0.06);
+  --shadow: 0 10px 28px rgba(0,0,0,0.07);
+  --radius-xl: 24px;
+  --radius-lg: 18px;
+  --radius-md: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Segoe UI", sans-serif;
+  color: var(--text);
+  min-height: 100vh;
+}
+
+body.theme-female {
+  --bg: #fff8fa;
+  --primary: #ff6b9a;
+  --primary-soft: #ffe3ec;
+}
+
+body.theme-male {
+  --bg: #f4f8ff;
+  --primary: #5b8def;
+  --primary-soft: #e3edff;
+}
+
+.page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, var(--bg) 0%, #ffffff 100%);
+  padding: 24px 16px 40px;
+}
+
+.container {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 800;
+  margin-bottom: 14px;
+}
+
+.title {
+  margin: 0;
+  font-size: 30px;
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  margin: 10px auto 0;
+  max-width: 520px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.55;
+  word-break: keep-all;
+}
+
+.card {
+  background: var(--card);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  margin-bottom: 14px;
+}
+
+.profile-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-soft);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.profile-meta {
+  min-width: 0;
+}
+
+.name {
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.meta {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.section {
+  margin-top: 18px;
+}
+
+.section-title {
+  font-size: 14px;
+  color: var(--muted);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.keyword-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.keyword-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.reason-box {
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  background: color-mix(in srgb, var(--primary) 8%, white);
+  border: 1px solid color-mix(in srgb, var(--primary) 14%, white);
+  font-size: 15px;
+  line-height: 1.65;
+  word-break: keep-all;
+  white-space: pre-wrap;
+}
+
+.empty {
+  color: #b1b1b1;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.button {
+  border: 0;
+  border-radius: 16px;
+  padding: 15px 16px;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.12s ease, opacity 0.18s ease;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+}
+
+.button.primary {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 10px 22px color-mix(in srgb, var(--primary) 24%, transparent);
+}
+
+.button.secondary {
+  background: #f3f4f6;
+  color: #333;
+}
+
+.helper {
+  text-align: center;
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+@media (max-width: 767px) {
+  .page {
+    padding: 18px 14px 32px;
   }
-  .wrap {
-    max-width: 720px;
-    margin: 0 auto;
-  }
-  .card {
-    background: #fff;
-    border-radius: 22px;
-    padding: 28px 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-    text-align: center;
-  }
-  h1 {
-    margin: 0 0 10px;
-    font-size: 28px;
-  }
-  .sub {
-    margin: 0 0 22px;
-    color: #666;
-    font-size: 15px;
-    line-height: 1.5;
-  }
-  .name {
+
+  .title {
     font-size: 24px;
-    font-weight: 800;
-    margin-bottom: 18px;
   }
-  .keywords {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 22px;
-  }
-  .keyword {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 11px 14px;
-    border-radius: 999px;
-    background: #ff6b9a;
-    color: #fff;
-    font-size: 15px;
-    font-weight: 800;
-    box-shadow: 0 8px 18px rgba(255,107,154,0.22);
-  }
-  .memo-box {
-    background: #f8f8fb;
-    border: 1px solid #ececf1;
-    border-radius: 16px;
-    padding: 16px;
-    text-align: left;
-    color: #444;
-    line-height: 1.6;
-    min-height: 76px;
-    white-space: pre-wrap;
-  }
-  .memo-title {
+
+  .subtitle {
     font-size: 13px;
-    color: #777;
-    font-weight: 700;
-    margin-bottom: 8px;
   }
+
+  .card {
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .profile-row {
+    align-items: flex-start;
+  }
+
+  .name {
+    font-size: 20px;
+  }
+
   .actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 22px;
+    grid-template-columns: 1fr;
   }
-  button {
-    flex: 1;
-    border: 0;
-    border-radius: 14px;
-    padding: 15px 16px;
-    font-size: 16px;
-    font-weight: 800;
-    cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .page {
+    padding: 40px 24px 56px;
   }
-  .primary { background: #ff6b9a; color: #fff; }
-  .secondary { background: #f3f4f6; color: #333; }
+
+  .title {
+    font-size: 36px;
+  }
+
+  .subtitle {
+    font-size: 15px;
+  }
+
+  .card {
+    padding: 24px;
+  }
+}
 </style>
 </head>
+
 <body>
-  <div class="wrap">
-    <div class="card">
-      <h1>선택 결과</h1>
-      <p class="sub">방금 선택한 첫인상 키워드와 메모예요.</p>
+  <div class="page">
+    <div class="container">
 
-      <div class="name" id="nickname">-</div>
-      <div class="keywords" id="keywords"></div>
+      <div class="hero">
+        <div class="eyebrow">RESULT</div>
+        <h1 class="title">첫인상 선택 결과</h1>
+        <p class="subtitle">
+          지금 느낀 인상을 3가지 키워드와 이유로 정리했어요.
+        </p>
+      </div>
 
-      <div class="memo-box">
-        <div class="memo-title">메모</div>
-        <div id="memo">남긴 메모가 없어요.</div>
+      <div class="card">
+        <div class="profile-row">
+          <div class="avatar" id="avatar">?</div>
+          <div class="profile-meta">
+            <h2 class="name" id="nickname">닉네임</h2>
+            <div class="meta" id="genderLabel">여자 키워드 기준</div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">선택한 키워드</div>
+          <div class="keyword-list" id="keywords"></div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">선택 이유</div>
+          <div class="reason-box" id="memo"></div>
+        </div>
       </div>
 
       <div class="actions">
-        <button class="secondary" type="button" onclick="goBack()">다시 선택하기</button>
-        <button class="primary" type="button" onclick="copyResult()">결과 복사</button>
+        <button class="button secondary" type="button" id="backButton">다시 선택하기</button>
+        <button class="button primary" type="button" id="copyButton">결과 복사하기</button>
       </div>
+
+      <div class="helper" id="helperText">상대와 결과를 비교해보면 더 재밌어요.</div>
+
     </div>
   </div>
 
 <script>
-  const data = JSON.parse(localStorage.getItem('result') || '{}');
+const data = JSON.parse(localStorage.getItem("result") || "{}");
+const bodyEl = document.body;
 
-  document.getElementById('nickname').textContent = data.nickname || '이름 없음';
+function applyTheme(gender) {
+  bodyEl.classList.remove("theme-female", "theme-male");
+  bodyEl.classList.add(gender === "male" ? "theme-male" : "theme-female");
+}
 
-  const keywordsWrap = document.getElementById('keywords');
-  (data.keywords || []).forEach((word) => {
-    const span = document.createElement('span');
-    span.className = 'keyword';
-    span.textContent = word;
-    keywordsWrap.appendChild(span);
+const gender = data.gender || "female";
+applyTheme(gender);
+
+const nickname = data.nickname || "이름 없음";
+const memo = data.memo && data.memo.trim() ? data.memo.trim() : "";
+const keywords = Array.isArray(data.keywords) ? data.keywords : [];
+
+document.getElementById("nickname").textContent = nickname;
+document.getElementById("avatar").textContent = nickname.charAt(0) || "?";
+document.getElementById("genderLabel").textContent = gender === "male" ? "남자 키워드 기준" : "여자 키워드 기준";
+
+const keywordsEl = document.getElementById("keywords");
+if (keywords.length > 0) {
+  keywords.forEach(word => {
+    const chip = document.createElement("span");
+    chip.className = "keyword-chip";
+    chip.textContent = word;
+    keywordsEl.appendChild(chip);
   });
+} else {
+  const empty = document.createElement("div");
+  empty.className = "empty";
+  empty.textContent = "선택된 키워드가 없어요.";
+  keywordsEl.appendChild(empty);
+}
 
-  document.getElementById('memo').textContent = data.memo || '남긴 메모가 없어요.';
+const memoEl = document.getElementById("memo");
+memoEl.textContent = memo || "작성한 이유가 없어요.";
 
-  function goBack() {
-    window.location.href = 'index.html';
+document.getElementById("backButton").addEventListener("click", () => {
+  window.location.href = "index.html";
+});
+
+document.getElementById("copyButton").addEventListener("click", async () => {
+  const resultText = [
+    `[첫인상 3단어 결과]`,
+    `닉네임: ${nickname}`,
+    `기준: ${gender === "male" ? "남자 키워드" : "여자 키워드"}`,
+    `키워드: ${keywords.join(", ") || "-"}`,
+    `이유: ${memo || "-"}`
+  ].join("\n");
+
+  try {
+    await navigator.clipboard.writeText(resultText);
+    document.getElementById("helperText").textContent = "결과가 복사됐어요.";
+  } catch (e) {
+    document.getElementById("helperText").textContent = "복사에 실패했어요. 직접 선택해서 복사해주세요.";
   }
-
-  async function copyResult() {
-    const text = [
-      `닉네임: ${data.nickname || ''}`,
-      `키워드: ${(data.keywords || []).join(', ')}`,
-      `메모: ${data.memo || ''}`
-    ].join('\n');
-
-    try {
-      await navigator.clipboard.writeText(text);
-      alert('결과를 복사했어요.');
-    } catch (e) {
-      alert('복사에 실패했어요.');
-    }
-  }
+});
 </script>
 </body>
 </html>
