@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>선택 결과</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", sans-serif;
+    margin: 0;
+    padding: 24px 16px 40px;
+    background: linear-gradient(180deg, #fff7fb 0%, #fafafa 100%);
+    color: #222;
+  }
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .card {
+    background: #fff;
+    border-radius: 22px;
+    padding: 28px 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    text-align: center;
+  }
+  h1 {
+    margin: 0 0 10px;
+    font-size: 28px;
+  }
+  .sub {
+    margin: 0 0 22px;
+    color: #666;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .name {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 18px;
+  }
+  .keywords {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+  .keyword {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 11px 14px;
+    border-radius: 999px;
+    background: #ff6b9a;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 800;
+    box-shadow: 0 8px 18px rgba(255,107,154,0.22);
+  }
+  .memo-box {
+    background: #f8f8fb;
+    border: 1px solid #ececf1;
+    border-radius: 16px;
+    padding: 16px;
+    text-align: left;
+    color: #444;
+    line-height: 1.6;
+    min-height: 76px;
+    white-space: pre-wrap;
+  }
+  .memo-title {
+    font-size: 13px;
+    color: #777;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 22px;
+  }
+  button {
+    flex: 1;
+    border: 0;
+    border-radius: 14px;
+    padding: 15px 16px;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+  .primary { background: #ff6b9a; color: #fff; }
+  .secondary { background: #f3f4f6; color: #333; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>선택 결과</h1>
+      <p class="sub">방금 선택한 첫인상 키워드와 메모예요.</p>
+
+      <div class="name" id="nickname">-</div>
+      <div class="keywords" id="keywords"></div>
+
+      <div class="memo-box">
+        <div class="memo-title">메모</div>
+        <div id="memo">남긴 메모가 없어요.</div>
+      </div>
+
+      <div class="actions">
+        <button class="secondary" type="button" onclick="goBack()">다시 선택하기</button>
+        <button class="primary" type="button" onclick="copyResult()">결과 복사</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const data = JSON.parse(localStorage.getItem('result') || '{}');
+
+  document.getElementById('nickname').textContent = data.nickname || '이름 없음';
+
+  const keywordsWrap = document.getElementById('keywords');
+  (data.keywords || []).forEach((word) => {
+    const span = document.createElement('span');
+    span.className = 'keyword';
+    span.textContent = word;
+    keywordsWrap.appendChild(span);
+  });
+
+  document.getElementById('memo').textContent = data.memo || '남긴 메모가 없어요.';
+
+  function goBack() {
+    window.location.href = 'index.html';
+  }
+
+  async function copyResult() {
+    const text = [
+      `닉네임: ${data.nickname || ''}`,
+      `키워드: ${(data.keywords || []).join(', ')}`,
+      `메모: ${data.memo || ''}`
+    ].join('\n');
+
+    try {
+      await navigator.clipboard.writeText(text);
+      alert('결과를 복사했어요.');
+    } catch (e) {
+      alert('복사에 실패했어요.');
+    }
+  }
+</script>
+</body>
+</html>
