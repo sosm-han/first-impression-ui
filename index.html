@@ -171,6 +171,19 @@
             <div class="actions">
               <button class="btn secondary" id="resetBtn" type="button">초기화</button>
               <button class="btn primary" id="nextBtn" type="button">선택 완료</button>
+              button.onclick = async () => {
+
+  const data = {
+    gender: selectedGender,
+    keywords: selectedKeywords,
+    memo: document.getElementById("memo").value
+  };
+
+  await submitData(data);
+
+  // 다음 페이지 이동
+  window.location.href = "result.html";
+};
             </div>
           </div>
         </div>
@@ -231,6 +244,20 @@
   <div class="toast" id="toast"></div>
 
   <script>
+    https://script.google.com/macros/s/AKfycbx2sdCk2rAGwhC_YrcqAX7UENy3XmVPMn2ptViEhaCJolHDLkYH2qeiWwNU9oPGlUKkMA/exec
+    async function submitData(data) {
+  try {
+    await fetch(scriptURL, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+  } catch (error) {
+    console.error("전송 실패:", error);
+  }
+}
     const DATA = {
       female: [
         '밝은','세련된','귀여운','차분한','매력적인',
