@@ -363,7 +363,7 @@ body.theme-male {
   </div>
 
 <script>
-const scriptURL = "https://script.google.com/macros/s/AKfycbze2rzrzDh5F_Tajn4TuqXMr1WZpuaE0XmZDU9MhgF4SDul-Bzu2Bt504ZA1WBXgSJkuQ/exec";
+const scriptURL = "https://script.google.com/macros/s/AKfycbx5Z6ElZTSjksyr6k2zEAAm0p3QShnEg_Bwu13k61BJbTMPQApAmGWBjM5bJ2B_gI66mA/exec";
 
 const femaleKeywords = [
   "밝은","세련된","귀여운","차분한","매력적인",
@@ -464,6 +464,26 @@ function submitData(data) {
   }).catch(() => {});
 }
 
+function getDeviceInfo() {
+  const ua = navigator.userAgent;
+
+  let device = /Mobi|Android/i.test(ua) ? "mobile" : "desktop";
+  let os = "unknown";
+
+  if (/Android/i.test(ua)) os = "Android";
+  else if (/iPhone|iPad|iPod/i.test(ua)) os = "iOS";
+  else if (/Win/i.test(ua)) os = "Windows";
+  else if (/Mac/i.test(ua)) os = "Mac";
+
+  return {
+    device,
+    os,
+    userAgent: ua,
+    screen: `${window.innerWidth}x${window.innerHeight}`,
+    language: navigator.language
+  };
+}
+  
 submitBtn.addEventListener("click", () => {
   const nickname = document.getElementById("nickname").value.trim();
   const memo = document.getElementById("memo").value.trim();
@@ -478,13 +498,20 @@ submitBtn.addEventListener("click", () => {
     return;
   }
 
-  const data = {
-    nickname,
-    gender: currentGender,
-    keywords: selected,
-    memo
-  };
+  const deviceInfo = getDeviceInfo();
 
+  const data = {
+  nickname,
+  gender: currentGender,
+  keywords: selected,
+  memo,
+  device: deviceInfo.device,
+  os: deviceInfo.os,
+  screen: deviceInfo.screen,
+  language: deviceInfo.language,
+  userAgent: deviceInfo.userAgent
+};
+  
   submitData(data);
   localStorage.setItem("result", JSON.stringify(data));
   window.location.href = "result.html";
